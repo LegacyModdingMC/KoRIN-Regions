@@ -7,6 +7,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import de.rinonline.korinrpg.ConfigurationMoD;
 import de.rinonline.korinrpg.Network.PacketDispatcher;
 import de.rinonline.korinrpg.Network.SyncPlayerPropsMessage;
+import de.rinonline.korinrpg.Network.sendTextpop;
 import de.rinonline.korinrpg.Network.sendVillagePacket;
 import de.rinonline.korinrpg.RINMAIN;
 import de.rinonline.korinrpg.nbt.RINPlayer;
@@ -40,13 +41,15 @@ public class RegionEventHandler {
   
   @SubscribeEvent
   public void onPlayerLogIn(PlayerEvent.PlayerLoggedInEvent event) {
-    if (event.player instanceof EntityPlayer)
+    if (event.player instanceof EntityPlayer) {
       if (RINPlayer.get(event.player) == null) {
         RINPlayer.register(event.player);
       } else {
         PacketDispatcher.sendTo((IMessage)new SyncPlayerPropsMessage(event.player), (EntityPlayerMP)event.player);
-      }  
-  }
+      } 
+      PacketDispatcher.sendTo(new sendTextpop("none"),(EntityPlayerMP)event.player);
+    	}  
+    }
   
   @SubscribeEvent
   public void onPlayerLogOut(PlayerEvent.PlayerLoggedOutEvent event) {

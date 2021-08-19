@@ -39,8 +39,10 @@ public class InterfaceGUI extends GuiScreen {
   private static int VillagePosY;
   
   private static int VillagePosZ;
-  
+
   private static int radius;
+  
+  public static int playtime = 200;
   
   public InterfaceGUI(Minecraft mc) {
     this.mc = mc;
@@ -51,6 +53,9 @@ public class InterfaceGUI extends GuiScreen {
   
   @SubscribeEvent(priority = EventPriority.HIGHEST)
   public void onRenderExperienceBar(RenderGameOverlayEvent.Chat event) {
+	  if(playtime > 0) {
+		  --playtime;
+	  }else {
     EntityClientPlayerMP entityClientPlayerMP = this.mc.thePlayer;
     if (!DISPLAYSTRING.isEmpty()) {
       if (DISPLAYSTRING.size() >= 0)
@@ -88,7 +93,8 @@ public class InterfaceGUI extends GuiScreen {
       inVillage = false;
     } else {
       updateBiome((EntityPlayer)entityClientPlayerMP);
-    } 
+    	} 
+	  }
   }
   
   private void updateBiome(EntityPlayer player) {

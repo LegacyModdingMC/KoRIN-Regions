@@ -23,7 +23,7 @@ public class RINMAIN {
   
   public static final String name = "Kingdom of RIN | Regions";
   
-  public static final String VERSION = "3.9";
+  public static final String VERSION = "4.0";
   
   public static ModInteropProxy modInterop;
   

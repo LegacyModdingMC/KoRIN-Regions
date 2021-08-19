@@ -19,6 +19,7 @@ public class PacketDispatcher {
     registerMessage(sendVillagePacket.class, sendVillagePacket.class, Side.CLIENT);
     registerMessage(PacketGuiOpener.class, PacketGuiOpener.class, Side.SERVER);
     registerMessage(PacketGuiTeleport.class, PacketGuiTeleport.class, Side.SERVER);
+    registerMessage(sendTextpop.class, sendTextpop.class, Side.CLIENT);
     registerMessage(sendTextpop.class, sendTextpop.class, Side.SERVER);
   }
   

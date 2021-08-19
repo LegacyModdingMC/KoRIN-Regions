@@ -30,9 +30,13 @@ public class sendTextpop extends AbstractMessage.AbstractClientMessage<sendTextp
   }
   
   public void process(EntityPlayer player, Side side) {
+	  if(side.isServer()) {
 	  if(!RINPlayer.get(player).DiscoverdBiomeList.contains(this.data2)) {
 	      (RINPlayer.get(player)).DiscoverdBiomeList.add(this.data2); 
 	  }
       PacketDispatcher.sendTo(new SyncPlayerPropsMessage(player),(EntityPlayerMP) player); 
-  }
+	  }else {
+			InterfaceGUI.playtime = 200;
+	  	}
+	  }
 }

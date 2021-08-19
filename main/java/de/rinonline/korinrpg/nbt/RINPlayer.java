@@ -92,7 +92,6 @@ public class RINPlayer implements IExtendedEntityProperties {
   }
   
   public void init(Entity entity, World world) {
-    System.out.println("init");
     this.DiscoverdCordsList = new ArrayList<ChunkCoordinates>();
     this.DiscoverdNameList = new ArrayList<String>();
     this.inventory = new InventoryRINPlayer();
