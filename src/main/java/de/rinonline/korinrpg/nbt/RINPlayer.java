@@ -85,8 +85,10 @@ public class RINPlayer implements IExtendedEntityProperties {
     int tempsize2 = properties.getInteger("size_biomename");
     for (int j = 0; j < tempsize2; j++)
       this.DiscoverdBiomeList.add(properties.getString("biomename" + j + "_Name")); 
-    RuneStoneGUI.strlist = this.DiscoverdNameList;
-    RuneStoneGUI.cordlist = this.DiscoverdCordsList;
+    if(this.player.worldObj.isRemote) {
+        RuneStoneGUI.strlist = this.DiscoverdNameList;
+        RuneStoneGUI.cordlist = this.DiscoverdCordsList;
+    }
     this.inventory.readFromNBT(properties);
     MapCooldown = properties.getInteger("MapCooldown");
   }
@@ -95,8 +97,10 @@ public class RINPlayer implements IExtendedEntityProperties {
     this.DiscoverdCordsList = new ArrayList<ChunkCoordinates>();
     this.DiscoverdNameList = new ArrayList<String>();
     this.inventory = new InventoryRINPlayer();
-    RuneStoneGUI.strlist = this.DiscoverdNameList;
-    RuneStoneGUI.cordlist = this.DiscoverdCordsList;
+   if(this.player.worldObj.isRemote) {
+        RuneStoneGUI.strlist = this.DiscoverdNameList;
+        RuneStoneGUI.cordlist = this.DiscoverdCordsList;
+    }
   }
   
   public void addTeleportCords(ChunkCoordinates cords, String str) {

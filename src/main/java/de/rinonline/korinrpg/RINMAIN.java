@@ -17,13 +17,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 
-@Mod(modid = "korinregions", version = "4.2")
+@Mod(modid = "korinregions", version = "4.3")
 public class RINMAIN {
   public static final String MODID = "korinregions";
   
   public static final String name = "Kingdom of RIN | Regions";
   
-  public static final String VERSION = "4.2";
+  public static final String VERSION = "4.3";
   
   public static ModInteropProxy modInterop;
   
