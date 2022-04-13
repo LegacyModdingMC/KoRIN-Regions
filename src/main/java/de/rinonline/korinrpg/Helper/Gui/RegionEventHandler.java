@@ -1,17 +1,18 @@
 package de.rinonline.korinrpg.Helper.Gui;
 
+import java.util.List;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import de.rinonline.korinrpg.ConfigurationMoD;
-import de.rinonline.korinrpg.Network.PacketDispatcher;
-import de.rinonline.korinrpg.Network.SyncPlayerPropsMessage;
-import de.rinonline.korinrpg.Network.sendTextpop;
-import de.rinonline.korinrpg.Network.sendVillagePacket;
 import de.rinonline.korinrpg.RINMAIN;
+import de.rinonline.korinrpg.Network.PacketDispatcher;
+import de.rinonline.korinrpg.Network.SyncPlayerPropsRegions;
+import de.rinonline.korinrpg.Network.sendTextpopRegions;
+import de.rinonline.korinrpg.Network.sendVillagePacket;
 import de.rinonline.korinrpg.nbt.RINPlayer;
-import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -35,7 +36,7 @@ public class RegionEventHandler {
       if (RINPlayer.get((EntityPlayer)event.entity) == null) {
         RINPlayer.register((EntityPlayer)event.entity);
       } else {
-        PacketDispatcher.sendTo((IMessage)new SyncPlayerPropsMessage((EntityPlayer)event.entity), (EntityPlayerMP)event.entity);
+        PacketDispatcher.sendTo((IMessage)new SyncPlayerPropsRegions((EntityPlayer)event.entity), (EntityPlayerMP)event.entity);
       }  
   }
   
@@ -45,16 +46,16 @@ public class RegionEventHandler {
       if (RINPlayer.get(event.player) == null) {
         RINPlayer.register(event.player);
       } else {
-        PacketDispatcher.sendTo((IMessage)new SyncPlayerPropsMessage(event.player), (EntityPlayerMP)event.player);
+        PacketDispatcher.sendTo((IMessage)new SyncPlayerPropsRegions(event.player), (EntityPlayerMP)event.player);
       } 
-      PacketDispatcher.sendTo(new sendTextpop("none"),(EntityPlayerMP)event.player);
+      PacketDispatcher.sendTo(new sendTextpopRegions("none"),(EntityPlayerMP)event.player);
     	}  
     }
   
   @SubscribeEvent
   public void onPlayerLogOut(PlayerEvent.PlayerLoggedOutEvent event) {
     if (event.player instanceof EntityPlayer)
-      PacketDispatcher.sendTo((IMessage)new SyncPlayerPropsMessage(event.player), (EntityPlayerMP)event.player); 
+      PacketDispatcher.sendTo((IMessage)new SyncPlayerPropsRegions(event.player), (EntityPlayerMP)event.player); 
   }
   
   @SubscribeEvent
@@ -67,7 +68,7 @@ public class RegionEventHandler {
   @SubscribeEvent
   public void onClonePlayer( net.minecraftforge.event.entity.player.PlayerEvent.Clone event) {
     RINPlayer.get(event.entityPlayer).copy(RINPlayer.get(event.original));
-    PacketDispatcher.sendTo((IMessage)new SyncPlayerPropsMessage(event.entityPlayer), (EntityPlayerMP)event.entityPlayer);
+    PacketDispatcher.sendTo((IMessage)new SyncPlayerPropsRegions(event.entityPlayer), (EntityPlayerMP)event.entityPlayer);
   }
   
   @SubscribeEvent

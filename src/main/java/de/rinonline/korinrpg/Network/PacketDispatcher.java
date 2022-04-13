@@ -14,13 +14,13 @@ public class PacketDispatcher {
   
   public static final void registerPackets() {
     registerMessage(sendTextPacket.class, sendTextPacket.class, Side.CLIENT);
-    registerMessage(SyncPlayerPropsMessage.class, SyncPlayerPropsMessage.class, Side.CLIENT);
-    registerMessage(SyncPlayerPropsMessage.class, SyncPlayerPropsMessage.class, Side.SERVER);
+    registerMessage(SyncPlayerPropsRegions.class, SyncPlayerPropsRegions.class, Side.CLIENT);
+    registerMessage(SyncPlayerPropsRegions.class, SyncPlayerPropsRegions.class, Side.SERVER);
     registerMessage(sendVillagePacket.class, sendVillagePacket.class, Side.CLIENT);
-    registerMessage(PacketGuiOpener.class, PacketGuiOpener.class, Side.SERVER);
+    registerMessage(PacketGuiOpenerRegions.class, PacketGuiOpenerRegions.class, Side.SERVER);
     registerMessage(PacketGuiTeleport.class, PacketGuiTeleport.class, Side.SERVER);
-    registerMessage(sendTextpop.class, sendTextpop.class, Side.CLIENT);
-    registerMessage(sendTextpop.class, sendTextpop.class, Side.SERVER);
+    registerMessage(sendTextpopRegions.class, sendTextpopRegions.class, Side.CLIENT);
+    registerMessage(sendTextpopRegions.class, sendTextpopRegions.class, Side.SERVER);
   }
   
   private static final void registerMessage(Class handlerClass, Class messageClass, Side side) {

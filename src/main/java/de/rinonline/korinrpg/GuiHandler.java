@@ -9,18 +9,14 @@ import net.minecraft.world.World;
 
 public class GuiHandler implements IGuiHandler {
   public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-    if (ID == 55) {
+    if (ID == 55)
       return new RINInventoryContainerEmpty(player, player.inventory, new InventoryRINPlayer()); 
-    }else {
-        return null;
-    }
+    return null;
   }
   
   public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-    if (ID == 55) {
+    if (ID == 55)
       return new RuneStoneGUI(player, player.inventory, new InventoryRINPlayer()); 
-    }else {
-        return null;
-    } 
+    return null;
   }
 }

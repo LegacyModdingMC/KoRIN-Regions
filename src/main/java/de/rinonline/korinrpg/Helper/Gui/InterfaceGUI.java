@@ -8,7 +8,7 @@ import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import de.rinonline.korinrpg.ConfigurationMoD;
 import de.rinonline.korinrpg.Network.PacketDispatcher;
-import de.rinonline.korinrpg.Network.sendTextpop;
+import de.rinonline.korinrpg.Network.sendTextpopRegions;
 import de.rinonline.korinrpg.nbt.RINPlayer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
@@ -82,9 +82,7 @@ public class InterfaceGUI extends GuiScreen {
          	GL11.glEnable(GL11.GL_BLEND);
          	OpenGlHelper.glBlendFunc(770, 771, 1, 0);
 			if(f1 >=15) {
-			    //fontRender.drawStringWithShadow(DISPLAYSTRING.get(0), (int) (xPos-DISPLAYSTRING.get(0).length()*((ConfigurationMoD.ScaleSize/2)))+ConfigurationMoD.textX, yPos+ConfigurationMoD.textY+10, 6546456 );		
-			  
-			    fontRender.drawStringWithShadow(DISPLAYSTRING.get(0), xPos+ConfigurationMoD.textX - fontRender.getStringWidth(DISPLAYSTRING.get(0)) / 2, yPos+ConfigurationMoD.textY,  ConfigurationMoD.HTML_COLOR | (f1 << 24) );
+			    fontRender.drawStringWithShadow(DISPLAYSTRING.get(0), (int) (xPos-DISPLAYSTRING.get(0).length()*((ConfigurationMoD.ScaleSize/2)))+ConfigurationMoD.textX, yPos+ConfigurationMoD.textY,  ConfigurationMoD.HTML_COLOR | (f1 << 24) );		
 			}
 		    GL11.glDisable(GL11.GL_BLEND);
 		    GL11.glScaled(1/ConfigurationMoD.ScaleSize, 1/ConfigurationMoD.ScaleSize, 1/ConfigurationMoD.ScaleSize);
@@ -117,7 +115,7 @@ public class InterfaceGUI extends GuiScreen {
         DISPLAYSTRING.add(str);
         BIOMEOLD = str;
         if (!ConfigurationMoD.displayerBiomeAgain)
-           PacketDispatcher.sendToServer(new sendTextpop(str));
+           PacketDispatcher.sendToServer(new sendTextpopRegions(str));
       } 
     } 
   }
