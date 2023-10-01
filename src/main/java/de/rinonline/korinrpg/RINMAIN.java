@@ -20,26 +20,26 @@ import net.minecraftforge.common.config.Configuration;
 @Mod(modid = RINMAIN.MODID, version = RINMAIN.VERSION)
 public class RINMAIN {
   public static final String MODID = "korinregions";
-  
+
   public static final String name = "Kingdom of RIN | Regions";
-  
+
   public static final String VERSION = "GRADLETOKEN_VERSION";
-  
+
   public static ModInteropProxy modInterop;
-  
+
   public static RINMAIN instance;
-  
+
   public static Configuration config;
-  
+
   @SidedProxy(clientSide = "de.rinonline.korinrpg.BasisClientProxy", serverSide = "de.rinonline.korinrpg.BasisCommonProxy")
   public static BasisCommonProxy proxy;
-  
+
   public static BasisClientProxy proxyclient;
-  
+
   public RINMAIN() {
     instance = this;
   }
-  
+
   @EventHandler
   public void preInit(FMLPreInitializationEvent preEvent) {
     config = new Configuration(preEvent.getSuggestedConfigurationFile());
@@ -53,28 +53,27 @@ public class RINMAIN {
         e.printStackTrace();
       } catch (ClassNotFoundException e) {
         e.printStackTrace();
-      } 
+      }
     } else {
       modInterop = new DummyModInteropProxy();
-    } 
+    }
     NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
   }
-  
+
   @EventHandler
   public void init(FMLInitializationEvent event) {
-    new ItemRegistry();
     PacketDispatcher.registerPackets();
     RegionEventHandler events = new RegionEventHandler();
     FMLCommonHandler.instance().bus().register(events);
     MinecraftForge.EVENT_BUS.register(events);
   }
-  
+
   @EventHandler
   public void postInit(FMLPostInitializationEvent postEvent) {
     if (FMLCommonHandler.instance().getEffectiveSide().isClient())
-      MinecraftForge.EVENT_BUS.register(new InterfaceGUI(Minecraft.getMinecraft())); 
+      MinecraftForge.EVENT_BUS.register(new InterfaceGUI(Minecraft.getMinecraft()));
   }
-  
+
   @EventHandler
   public void serverLoad(FMLServerStartingEvent event) {
     event.registerServerCommand(new CommandDisplayText());
