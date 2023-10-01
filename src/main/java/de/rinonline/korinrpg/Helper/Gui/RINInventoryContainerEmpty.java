@@ -8,27 +8,28 @@ import net.minecraft.inventory.Container;
 public class RINInventoryContainerEmpty extends Container
 
 {
-private Minecraft mc;
 
-public RINInventoryContainerEmpty(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryRINPlayer inventoryCustom)
+    private Minecraft mc;
 
-{
-int i;
-}
+    public RINInventoryContainerEmpty(EntityPlayer player, InventoryPlayer inventoryPlayer,
+        InventoryRINPlayer inventoryCustom)
 
+    {
+        int i;
+    }
 
-/**
+    /**
+     * 
+     * This should always return true, since custom inventory can be accessed from anywhere
+     * 
+     */
 
- * This should always return true, since custom inventory can be accessed from anywhere
+    @Override
+    public boolean canInteractWith(EntityPlayer player)
 
- */
+    {
 
-@Override
-public boolean canInteractWith(EntityPlayer player)
+        return true;
 
-{
-
-return true;
-
-}
+    }
 }

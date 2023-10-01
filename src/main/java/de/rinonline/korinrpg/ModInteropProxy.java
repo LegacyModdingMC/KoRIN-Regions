@@ -1,41 +1,40 @@
 package de.rinonline.korinrpg;
 
-import astrotibs.villagenames.village.StructureVillageVN;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-public interface ModInteropProxy 
-{
+import astrotibs.villagenames.village.StructureVillageVN;
+
+public interface ModInteropProxy {
+
     void load();
 
-	NBTTagCompound getOrMakeVNInfo(World world, int posX, int posY, int posZ);
+    NBTTagCompound getOrMakeVNInfo(World world, int posX, int posY, int posZ);
 
 }
 
-class DummyModInteropProxy implements ModInteropProxy 
-{
-	@Override
-	public void load() {
-		
-	}
+class DummyModInteropProxy implements ModInteropProxy {
 
-	@Override
-	public NBTTagCompound getOrMakeVNInfo(World world, int posX, int posY, int posZ) {
-		return null;
-	}
+    @Override
+    public void load() {
+
+    }
+
+    @Override
+    public NBTTagCompound getOrMakeVNInfo(World world, int posX, int posY, int posZ) {
+        return null;
+    }
 
 }
 
-class ActiveModInteropProxy implements ModInteropProxy 
-{
-	
-	@Override
-	public void load() {
-	}
+class ActiveModInteropProxy implements ModInteropProxy {
 
-	@Override
-	public NBTTagCompound getOrMakeVNInfo(World world, int posX, int posY, int posZ) {
-		return StructureVillageVN.getOrMakeVNInfo(world, posX, posY, posZ);
-	}
+    @Override
+    public void load() {}
+
+    @Override
+    public NBTTagCompound getOrMakeVNInfo(World world, int posX, int posY, int posZ) {
+        return StructureVillageVN.getOrMakeVNInfo(world, posX, posY, posZ);
+    }
 
 }

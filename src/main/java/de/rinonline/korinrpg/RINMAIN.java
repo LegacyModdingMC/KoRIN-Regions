@@ -1,5 +1,9 @@
 package de.rinonline.korinrpg;
 
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -13,70 +17,75 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import de.rinonline.korinrpg.Helper.Gui.InterfaceGUI;
 import de.rinonline.korinrpg.Helper.Gui.RegionEventHandler;
 import de.rinonline.korinrpg.Network.PacketDispatcher;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 
 @Mod(modid = RINMAIN.MODID, version = RINMAIN.VERSION)
 public class RINMAIN {
-  public static final String MODID = "korinregions";
 
-  public static final String name = "Kingdom of RIN | Regions";
+    public static final String MODID = "korinregions";
 
-  public static final String VERSION = "GRADLETOKEN_VERSION";
+    public static final String name = "Kingdom of RIN | Regions";
 
-  public static ModInteropProxy modInterop;
+    public static final String VERSION = "GRADLETOKEN_VERSION";
 
-  public static RINMAIN instance;
+    public static ModInteropProxy modInterop;
 
-  public static Configuration config;
+    public static RINMAIN instance;
 
-  @SidedProxy(clientSide = "de.rinonline.korinrpg.BasisClientProxy", serverSide = "de.rinonline.korinrpg.BasisCommonProxy")
-  public static BasisCommonProxy proxy;
+    public static Configuration config;
 
-  public static BasisClientProxy proxyclient;
+    @SidedProxy(
+        clientSide = "de.rinonline.korinrpg.BasisClientProxy",
+        serverSide = "de.rinonline.korinrpg.BasisCommonProxy")
+    public static BasisCommonProxy proxy;
 
-  public RINMAIN() {
-    instance = this;
-  }
+    public static BasisClientProxy proxyclient;
 
-  @EventHandler
-  public void preInit(FMLPreInitializationEvent preEvent) {
-    config = new Configuration(preEvent.getSuggestedConfigurationFile());
-    ConfigurationMoD.loadConfig();
-    if (Loader.isModLoaded("VillageNames")) {
-      try {
-        modInterop = Class.forName("de.rinonline.korinrpg.ActiveModInteropProxy").<ModInteropProxy>asSubclass(ModInteropProxy.class).newInstance();
-      } catch (InstantiationException e) {
-        e.printStackTrace();
-      } catch (IllegalAccessException e) {
-        e.printStackTrace();
-      } catch (ClassNotFoundException e) {
-        e.printStackTrace();
-      }
-    } else {
-      modInterop = new DummyModInteropProxy();
+    public RINMAIN() {
+        instance = this;
     }
-    NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
-  }
 
-  @EventHandler
-  public void init(FMLInitializationEvent event) {
-    PacketDispatcher.registerPackets();
-    RegionEventHandler events = new RegionEventHandler();
-    FMLCommonHandler.instance().bus().register(events);
-    MinecraftForge.EVENT_BUS.register(events);
-  }
+    @EventHandler
+    public void preInit(FMLPreInitializationEvent preEvent) {
+        config = new Configuration(preEvent.getSuggestedConfigurationFile());
+        ConfigurationMoD.loadConfig();
+        if (Loader.isModLoaded("VillageNames")) {
+            try {
+                modInterop = Class.forName("de.rinonline.korinrpg.ActiveModInteropProxy")
+                    .<ModInteropProxy>asSubclass(ModInteropProxy.class)
+                    .newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            modInterop = new DummyModInteropProxy();
+        }
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+    }
 
-  @EventHandler
-  public void postInit(FMLPostInitializationEvent postEvent) {
-    if (FMLCommonHandler.instance().getEffectiveSide().isClient())
-      MinecraftForge.EVENT_BUS.register(new InterfaceGUI(Minecraft.getMinecraft()));
-  }
+    @EventHandler
+    public void init(FMLInitializationEvent event) {
+        PacketDispatcher.registerPackets();
+        RegionEventHandler events = new RegionEventHandler();
+        FMLCommonHandler.instance()
+            .bus()
+            .register(events);
+        MinecraftForge.EVENT_BUS.register(events);
+    }
 
-  @EventHandler
-  public void serverLoad(FMLServerStartingEvent event) {
-    event.registerServerCommand(new CommandDisplayText());
-    event.registerServerCommand(new CommandSetDisplayPoint());
-  }
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent postEvent) {
+        if (FMLCommonHandler.instance()
+            .getEffectiveSide()
+            .isClient()) MinecraftForge.EVENT_BUS.register(new InterfaceGUI(Minecraft.getMinecraft()));
+    }
+
+    @EventHandler
+    public void serverLoad(FMLServerStartingEvent event) {
+        event.registerServerCommand(new CommandDisplayText());
+        event.registerServerCommand(new CommandSetDisplayPoint());
+    }
 }
