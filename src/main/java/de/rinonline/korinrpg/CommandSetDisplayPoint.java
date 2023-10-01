@@ -21,13 +21,11 @@ public class CommandSetDisplayPoint implements ICommand {
 
 	@Override
 	public String getCommandName() {
-		// TODO Auto-generated method stub
 		return "adddisplayPosition";
 	}
 
 	@Override
 	public String getCommandUsage(ICommandSender p_71518_1_) {
-		// TODO Auto-generated method stub
 		return "/adddisplayPosition <PosX> <PosY> <PosZ> <Radius> <Name> Displays a certain Text for the Player at a certain Position";
 	}
 
@@ -39,31 +37,29 @@ public class CommandSetDisplayPoint implements ICommand {
 	}
 	@Override
 	public void processCommand(ICommandSender p_71515_1_, String[] p_71515_2_) {
+        if(p_71515_2_[0] != null && p_71515_2_[1] != null && p_71515_2_[2] != null && p_71515_2_[3] != null && p_71515_2_[4] != null) {
+            if(isNumeric(p_71515_2_[1]) && isNumeric(p_71515_2_[2])&& isNumeric(p_71515_2_[3])) {
+            int x =Integer.parseInt(p_71515_2_[0]);
+            int y =Integer.parseInt(p_71515_2_[1]);
+            int z =Integer.parseInt(p_71515_2_[2]);
+            int radius = Integer.parseInt(p_71515_2_[3]);
+            String Name = p_71515_2_[4];
 
-			if(p_71515_2_[0] != null && p_71515_2_[1] != null && p_71515_2_[2] != null && p_71515_2_[3] != null && p_71515_2_[4] != null) {
-				if(isNumeric(p_71515_2_[1]) && isNumeric(p_71515_2_[2])&& isNumeric(p_71515_2_[3])) {
-				int x =Integer.parseInt(p_71515_2_[0]);
-				int y =Integer.parseInt(p_71515_2_[1]);
-				int z =Integer.parseInt(p_71515_2_[2]);
-				int radius =Integer.parseInt(p_71515_2_[3]);
-				String Name =p_71515_2_[4];
-					
-	  			int[] templist = new int[] {x,y,z,radius};
-					ConfigurationMoD.addPoint(templist,Name);
-
-				}}else {
-					p_71515_1_.addChatMessage(new ChatComponentText("Format Error: /adddisplayPosition <PosX> <PosY> <PosZ> <Radius> <Name>"));	
-				}
+            int[] templist = new int[] {x,y,z,radius};
+                ConfigurationMoD.addPoint(templist,Name);
+            }
+        } else {
+            p_71515_1_.addChatMessage(new ChatComponentText("Format Error: /adddisplayPosition <PosX> <PosY> <PosZ> <Radius> <Name>"));
+        }
 	}
 
     private static boolean isNumeric(String str){
         return str != null && str.matches("[0-9.]+");
     }
-    
+
 	@Override
-	public boolean canCommandSenderUseCommand(ICommandSender p_71519_1_) {
-		// TODO Auto-generated method stub
-		return true;
+	public boolean canCommandSenderUseCommand(ICommandSender sender) {
+        return sender.canCommandSenderUseCommand(2, this.getCommandName());
 	}
 
 	@Override
