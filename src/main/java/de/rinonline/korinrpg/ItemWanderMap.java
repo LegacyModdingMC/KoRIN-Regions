@@ -8,7 +8,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.rinonline.korinrpg.Network.PacketDispatcher;
@@ -28,7 +27,7 @@ public class ItemWanderMap extends Item {
 
     public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_) {
         if (!p_77659_2_.isRemote) {
-            PacketDispatcher.sendTo((IMessage) new SyncPlayerPropsRegions(p_77659_3_), (EntityPlayerMP) p_77659_3_);
+            PacketDispatcher.sendTo(new SyncPlayerPropsRegions(p_77659_3_), (EntityPlayerMP) p_77659_3_);
             p_77659_3_.openGui(
                 RINMAIN.instance,
                 55,

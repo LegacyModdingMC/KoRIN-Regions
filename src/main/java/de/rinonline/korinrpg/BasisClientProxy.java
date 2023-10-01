@@ -9,7 +9,6 @@ public class BasisClientProxy extends BasisCommonProxy {
 
     @Override
     public EntityPlayer getPlayerEntity(MessageContext ctx) {
-
         return (ctx.side.isClient() ? Minecraft.getMinecraft().thePlayer : super.getPlayerEntity(ctx));
     }
 

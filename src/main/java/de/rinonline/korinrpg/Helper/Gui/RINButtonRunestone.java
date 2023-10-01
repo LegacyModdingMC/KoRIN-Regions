@@ -66,13 +66,12 @@ public class RINButtonRunestone extends GuiButton {
 
     public void drawButton(int x, int y) {
         float f = 0.00390625F;
-        float f1 = 0.00390625F;
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
-        tessellator.addVertexWithUV(x, (y + 16), this.zLevel, ((this.ID + 0) * f), (64.0F * f1));
-        tessellator.addVertexWithUV((x + 16), (y + 16), this.zLevel, ((this.ID + 64) * f), (64.0F * f1));
-        tessellator.addVertexWithUV((x + 16), (y + 0), this.zLevel, ((this.ID + 64) * f), (0.0F * f1));
-        tessellator.addVertexWithUV((x + 0), (y + 0), this.zLevel, ((this.ID + 0) * f), (0.0F * f1));
+        tessellator.addVertexWithUV(x, (y + 16), this.zLevel, (this.ID * f), (64.0F * f));
+        tessellator.addVertexWithUV((x + 16), (y + 16), this.zLevel, ((this.ID + 64) * f), (64.0F * f));
+        tessellator.addVertexWithUV((x + 16), y, this.zLevel, ((this.ID + 64) * f), (0.0F * f));
+        tessellator.addVertexWithUV(x, y, this.zLevel, (this.ID * f), (0.0F * f));
         tessellator.draw();
     }
 }

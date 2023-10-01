@@ -13,7 +13,6 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import de.rinonline.korinrpg.ConfigurationMoD;
 import de.rinonline.korinrpg.Network.PacketDispatcher;
 import de.rinonline.korinrpg.Network.SyncPlayerPropsRegions;
@@ -36,20 +35,18 @@ public class RegionEventHandler {
         if (event.entity instanceof EntityPlayer) if (RINPlayer.get((EntityPlayer) event.entity) == null) {
             RINPlayer.register((EntityPlayer) event.entity);
         } else {
-            PacketDispatcher.sendTo(
-                (IMessage) new SyncPlayerPropsRegions((EntityPlayer) event.entity),
-                (EntityPlayerMP) event.entity);
+            PacketDispatcher
+                .sendTo(new SyncPlayerPropsRegions((EntityPlayer) event.entity), (EntityPlayerMP) event.entity);
         }
     }
 
     @SubscribeEvent
     public void onPlayerLogIn(PlayerEvent.PlayerLoggedInEvent event) {
-        if (event.player instanceof EntityPlayer) {
+        if (event.player != null) {
             if (RINPlayer.get(event.player) == null) {
                 RINPlayer.register(event.player);
             } else {
-                PacketDispatcher
-                    .sendTo((IMessage) new SyncPlayerPropsRegions(event.player), (EntityPlayerMP) event.player);
+                PacketDispatcher.sendTo(new SyncPlayerPropsRegions(event.player), (EntityPlayerMP) event.player);
             }
             PacketDispatcher.sendTo(new sendTextpopRegions("none"), (EntityPlayerMP) event.player);
         }
@@ -57,8 +54,9 @@ public class RegionEventHandler {
 
     @SubscribeEvent
     public void onPlayerLogOut(PlayerEvent.PlayerLoggedOutEvent event) {
-        if (event.player instanceof EntityPlayer)
-            PacketDispatcher.sendTo((IMessage) new SyncPlayerPropsRegions(event.player), (EntityPlayerMP) event.player);
+        if (event.player != null) {
+            PacketDispatcher.sendTo(new SyncPlayerPropsRegions(event.player), (EntityPlayerMP) event.player);
+        }
     }
 
     @SubscribeEvent
@@ -71,8 +69,7 @@ public class RegionEventHandler {
     public void onClonePlayer(net.minecraftforge.event.entity.player.PlayerEvent.Clone event) {
         RINPlayer.get(event.entityPlayer)
             .copy(RINPlayer.get(event.original));
-        PacketDispatcher
-            .sendTo((IMessage) new SyncPlayerPropsRegions(event.entityPlayer), (EntityPlayerMP) event.entityPlayer);
+        PacketDispatcher.sendTo(new SyncPlayerPropsRegions(event.entityPlayer), (EntityPlayerMP) event.entityPlayer);
     }
 
     @SubscribeEvent
@@ -82,7 +79,8 @@ public class RegionEventHandler {
             if (!allVillages.isEmpty()) {
                 int a = allVillages.size();
                 for (int i = 0; i < a; i++) {
-                    ChunkCoordinates cords = ((Village) allVillages.get(i)).getCenter();
+                    ChunkCoordinates cords = allVillages.get(i)
+                        .getCenter();
                     List<EntityPlayer> list = event.world.playerEntities;
                     if (!list.isEmpty()) {
                         int o = list.size();
@@ -115,9 +113,8 @@ public class RegionEventHandler {
                                             .trim();
                                     if (ConfigurationMoD.canTeleportToVillages) RINPlayer.get(player)
                                         .addTeleportCords(cords, str);
-                                    PacketDispatcher.sendTo(
-                                        (IMessage) new sendVillagePacket(str, cords, 120),
-                                        (EntityPlayerMP) player);
+                                    PacketDispatcher
+                                        .sendTo(new sendVillagePacket(str, cords, 120), (EntityPlayerMP) player);
                                 }
                             }
                         }

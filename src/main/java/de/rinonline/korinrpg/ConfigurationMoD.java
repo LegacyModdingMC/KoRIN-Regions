@@ -6,7 +6,6 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.biome.BiomeGenBase;
 
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import de.rinonline.korinrpg.Network.PacketDispatcher;
 import de.rinonline.korinrpg.Network.sendVillagePacket;
 
@@ -136,7 +135,7 @@ public class ConfigurationMoD {
             ValueList = RINMAIN.config.get(CATEGORY_2, "cords_" + i, new int[] { 1, 12, 2, 2 })
                 .getIntList();
             if (player.getDistance(ValueList[0], ValueList[1], ValueList[2]) <= ValueList[3]) PacketDispatcher.sendTo(
-                (IMessage) new sendVillagePacket(
+                new sendVillagePacket(
                     RINMAIN.config.get(CATEGORY_2, "cords_" + i + "name", "none")
                         .getString(),
                     new ChunkCoordinates(ValueList[0], ValueList[1], ValueList[2]),

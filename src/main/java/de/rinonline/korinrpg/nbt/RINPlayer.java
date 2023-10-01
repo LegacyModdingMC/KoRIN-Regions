@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
@@ -21,15 +20,15 @@ public class RINPlayer implements IExtendedEntityProperties {
 
     private int timer;
 
-    private int maxtime = 20;
+    private final int maxtime = 20;
 
-    public ArrayList<String> DiscoverdBiomeList = new ArrayList<String>();
+    public ArrayList<String> DiscoverdBiomeList = new ArrayList<>();
 
     public static int MapCooldown = 0;
 
-    public ArrayList<ChunkCoordinates> DiscoverdCordsList = new ArrayList<ChunkCoordinates>();
+    public ArrayList<ChunkCoordinates> DiscoverdCordsList = new ArrayList<>();
 
-    public ArrayList<String> DiscoverdNameList = new ArrayList<String>();
+    public ArrayList<String> DiscoverdNameList = new ArrayList<>();
 
     public InventoryRINPlayer inventory = new InventoryRINPlayer();
 
@@ -37,11 +36,11 @@ public class RINPlayer implements IExtendedEntityProperties {
         this.player = player;
     }
 
-    public static final void register(EntityPlayer player) {
+    public static void register(EntityPlayer player) {
         player.registerExtendedProperties(RIN_PROP_NAME_REGIONS, new RINPlayer(player));
     }
 
-    public static final RINPlayer get(EntityPlayer player) {
+    public static RINPlayer get(EntityPlayer player) {
         return (RINPlayer) player.getExtendedProperties(RIN_PROP_NAME_REGIONS);
     }
 
@@ -66,14 +65,14 @@ public class RINPlayer implements IExtendedEntityProperties {
             properties.setString("biomename" + i + "_Name", this.DiscoverdBiomeList.get(i));
         this.inventory.writeToNBT(properties);
         properties.setInteger("MapCooldown", MapCooldown);
-        compound.setTag(RIN_PROP_NAME_REGIONS, (NBTBase) properties);
+        compound.setTag(RIN_PROP_NAME_REGIONS, properties);
     }
 
     public void loadNBTData(NBTTagCompound compound) {
         NBTTagCompound properties = (NBTTagCompound) compound.getTag(RIN_PROP_NAME_REGIONS);
-        this.DiscoverdCordsList = new ArrayList<ChunkCoordinates>();
+        this.DiscoverdCordsList = new ArrayList<>();
         int tempsize = properties.getInteger("size");
-        this.DiscoverdNameList = new ArrayList<String>();
+        this.DiscoverdNameList = new ArrayList<>();
         for (int i = 0; i < tempsize; i++) {
             int tempx = properties.getInteger("position_" + i + "_posX");
             int tempy = properties.getInteger("position_" + i + "_posY");
@@ -84,7 +83,7 @@ public class RINPlayer implements IExtendedEntityProperties {
                 this.DiscoverdNameList.add(properties.getString("position_" + i + "_Name"));
             }
         }
-        this.DiscoverdBiomeList = new ArrayList<String>();
+        this.DiscoverdBiomeList = new ArrayList<>();
         int tempsize2 = properties.getInteger("size_biomename");
         for (int j = 0; j < tempsize2; j++)
             this.DiscoverdBiomeList.add(properties.getString("biomename" + j + "_Name"));
@@ -95,8 +94,8 @@ public class RINPlayer implements IExtendedEntityProperties {
     }
 
     public void init(Entity entity, World world) {
-        this.DiscoverdCordsList = new ArrayList<ChunkCoordinates>();
-        this.DiscoverdNameList = new ArrayList<String>();
+        this.DiscoverdCordsList = new ArrayList<>();
+        this.DiscoverdNameList = new ArrayList<>();
         this.inventory = new InventoryRINPlayer();
         RuneStoneGUI.strlist = this.DiscoverdNameList;
         RuneStoneGUI.cordlist = this.DiscoverdCordsList;

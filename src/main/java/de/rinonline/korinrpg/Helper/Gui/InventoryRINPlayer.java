@@ -3,7 +3,6 @@ package de.rinonline.korinrpg.Helper.Gui;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
@@ -57,7 +56,7 @@ public class InventoryRINPlayer implements IInventory {
     }
 
     public boolean hasCustomInventoryName() {
-        return ("Custom Inventory".length() > 0);
+        return true;
     }
 
     public int getInventoryStackLimit() {
@@ -89,10 +88,10 @@ public class InventoryRINPlayer implements IInventory {
                 NBTTagCompound nbttagcompound1 = new NBTTagCompound();
                 nbttagcompound1.setByte("Slot", (byte) i);
                 getStackInSlot(i).writeToNBT(nbttagcompound1);
-                nbttaglist.appendTag((NBTBase) nbttagcompound1);
+                nbttaglist.appendTag(nbttagcompound1);
             }
         }
-        tagcompound.setTag("CustomInvTag", (NBTBase) nbttaglist);
+        tagcompound.setTag("CustomInvTag", nbttaglist);
     }
 
     public void readFromNBT(NBTTagCompound tagcompound) {

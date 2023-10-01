@@ -14,7 +14,7 @@ public class PacketDispatcher {
 
     private static final SimpleNetworkWrapper dispatcher = NetworkRegistry.INSTANCE.newSimpleChannel("korinregions");
 
-    public static final void registerPackets() {
+    public static void registerPackets() {
         registerMessage(sendTextPacket.class, sendTextPacket.class, Side.CLIENT);
         registerMessage(SyncPlayerPropsRegions.class, SyncPlayerPropsRegions.class, Side.CLIENT);
         registerMessage(SyncPlayerPropsRegions.class, SyncPlayerPropsRegions.class, Side.SERVER);
@@ -25,12 +25,12 @@ public class PacketDispatcher {
         registerMessage(sendTextpopRegions.class, sendTextpopRegions.class, Side.SERVER);
     }
 
-    private static final void registerMessage(Class handlerClass, Class messageClass, Side side) {
+    private static void registerMessage(Class handlerClass, Class messageClass, Side side) {
         packetId = (byte) (packetId + 1);
         dispatcher.registerMessage(handlerClass, messageClass, packetId, side);
     }
 
-    private static final <T extends AbstractMessage<T> & cpw.mods.fml.common.network.simpleimpl.IMessageHandler<T, IMessage>> void registerMessage(
+    private static <T extends AbstractMessage<T> & cpw.mods.fml.common.network.simpleimpl.IMessageHandler<T, IMessage>> void registerMessage(
         Class<T> clazz) {
         if (AbstractMessage.AbstractClientMessage.class.isAssignableFrom(clazz)) {
             packetId = (byte) (packetId + 1);
@@ -45,28 +45,27 @@ public class PacketDispatcher {
         }
     }
 
-    public static final void sendTo(IMessage message, EntityPlayerMP player) {
+    public static void sendTo(IMessage message, EntityPlayerMP player) {
         dispatcher.sendTo(message, player);
     }
 
-    public static final void sendToAllAround(IMessage message, NetworkRegistry.TargetPoint point) {
+    public static void sendToAllAround(IMessage message, NetworkRegistry.TargetPoint point) {
         dispatcher.sendToAllAround(message, point);
     }
 
-    public static final void sendToAllAround(IMessage message, int dimension, double x, double y, double z,
-        double range) {
+    public static void sendToAllAround(IMessage message, int dimension, double x, double y, double z, double range) {
         sendToAllAround(message, new NetworkRegistry.TargetPoint(dimension, x, y, z, range));
     }
 
-    public static final void sendToAllAround(IMessage message, EntityPlayer player, double range) {
+    public static void sendToAllAround(IMessage message, EntityPlayer player, double range) {
         sendToAllAround(message, player.worldObj.provider.dimensionId, player.posX, player.posY, player.posZ, range);
     }
 
-    public static final void sendToDimension(IMessage message, int dimensionId) {
+    public static void sendToDimension(IMessage message, int dimensionId) {
         dispatcher.sendToDimension(message, dimensionId);
     }
 
-    public static final void sendToServer(IMessage message) {
+    public static void sendToServer(IMessage message) {
         dispatcher.sendToServer(message);
     }
 }

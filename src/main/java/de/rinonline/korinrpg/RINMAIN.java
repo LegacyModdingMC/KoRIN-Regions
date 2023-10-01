@@ -53,11 +53,7 @@ public class RINMAIN {
                 modInterop = Class.forName("de.rinonline.korinrpg.ActiveModInteropProxy")
                     .<ModInteropProxy>asSubclass(ModInteropProxy.class)
                     .newInstance();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
+            } catch (InstantiationException | ClassNotFoundException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         } else {

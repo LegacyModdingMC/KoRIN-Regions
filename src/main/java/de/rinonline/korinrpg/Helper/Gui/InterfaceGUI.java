@@ -22,11 +22,11 @@ import de.rinonline.korinrpg.nbt.RINPlayer;
 
 public class InterfaceGUI extends GuiScreen {
 
-    private Minecraft mc;
+    private final Minecraft mc;
 
     private static boolean inVillage = false;
 
-    private static ArrayList<String> DISPLAYSTRING = new ArrayList<String>();
+    private static final ArrayList<String> DISPLAYSTRING = new ArrayList<>();
 
     private static String BIOMEOLD = "none";
 
@@ -34,7 +34,8 @@ public class InterfaceGUI extends GuiScreen {
 
     private static int time;
 
-    private static int f1 = 0, maxtime = ConfigurationMoD.DisplayTime;
+    private static int f1 = 0;
+    private static final int maxtime = ConfigurationMoD.DisplayTime;
 
     private static int VillagePosX;
 
@@ -103,7 +104,7 @@ public class InterfaceGUI extends GuiScreen {
             } else if (inVillage && entityClientPlayerMP.getDistance(VillagePosX, VillagePosY, VillagePosZ) > 50.0D) {
                 inVillage = false;
             } else {
-                updateBiome((EntityPlayer) entityClientPlayerMP);
+                updateBiome(entityClientPlayerMP);
             }
         }
     }

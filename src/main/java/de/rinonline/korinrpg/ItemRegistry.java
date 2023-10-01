@@ -16,7 +16,12 @@ public class ItemRegistry {
         GameRegistry.registerItem(Runestone, "Runestone");
         GameRegistry.addRecipe(
             new ItemStack(Runestone, 1),
-            new Object[] { "BBB", "BAB", "BBB", 'B', new ItemStack(Items.paper, 1), 'A',
-                new ItemStack(Items.emerald, 1) });
+            "BBB",
+            "BAB",
+            "BBB",
+            'B',
+            new ItemStack(Items.paper, 1),
+            'A',
+            new ItemStack(Items.emerald, 1));
     }
 }

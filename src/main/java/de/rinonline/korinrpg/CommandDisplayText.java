@@ -30,6 +30,7 @@ public class CommandDisplayText implements ICommand {
         return "/displaytext <playername> <text> Displays a certain Text for the Player";
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public List getCommandAliases() {
         List<String> commandAliases = new ArrayList();
@@ -57,6 +58,7 @@ public class CommandDisplayText implements ICommand {
         return sender.canCommandSenderUseCommand(2, this.getCommandName());
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_) {
         // TODO Auto-generated method stub

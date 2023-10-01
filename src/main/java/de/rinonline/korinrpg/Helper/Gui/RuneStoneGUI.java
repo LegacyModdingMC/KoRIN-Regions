@@ -19,7 +19,6 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import de.rinonline.korinrpg.ConfigurationMoD;
 import de.rinonline.korinrpg.Network.PacketDispatcher;
 import de.rinonline.korinrpg.Network.PacketGuiTeleport;
@@ -35,11 +34,11 @@ public class RuneStoneGUI extends GuiContainer {
 
     public static ArrayList<ChunkCoordinates> cordlist;
 
-    private int ImageWidth = 256;
+    private final int ImageWidth = 256;
 
-    private int ImageHeight = 256;
+    private final int ImageHeight = 256;
 
-    private InventoryPlayer inventoryPlayer;
+    private final InventoryPlayer inventoryPlayer;
 
     private GuiTextField text;
 
@@ -61,10 +60,9 @@ public class RuneStoneGUI extends GuiContainer {
 
     public void initGui() {
         EntityClientPlayerMP entityClientPlayerMP = (Minecraft.getMinecraft()).thePlayer;
-        RINPlayer rins = RINPlayer.get((EntityPlayer) entityClientPlayerMP);
+        RINPlayer rins = RINPlayer.get(entityClientPlayerMP);
         int k = this.width / 2;
         int l = this.height / 2;
-        int tempk = k + 29;
         Keyboard.enableRepeatEvents(true);
         this.buttonList.clear();
         if (!strlist.isEmpty()) {
@@ -76,11 +74,7 @@ public class RuneStoneGUI extends GuiContainer {
                 float x = (float) Math.cos(Math.toRadians(alpha2) * p) * 70.0F;
                 float z = (float) Math.sin(Math.toRadians(alpha2) * p) * 70.0F;
                 this.buttonList.add(
-                    new RINButtonRunestone(
-                        i,
-                        (int) (k + x - 8.0F),
-                        (int) (l + z - 8.0F),
-                        I18n.format(strlist.get(i), new Object[0])));
+                    new RINButtonRunestone(i, (int) (k + x - 8.0F), (int) (l + z - 8.0F), I18n.format(strlist.get(i))));
             }
         }
         super.initGui();
@@ -119,24 +113,23 @@ public class RuneStoneGUI extends GuiContainer {
     protected void actionPerformed(GuiButton p_146284_1_) {
         if (p_146284_1_.enabled) if (ConfigurationMoD.useMapCooldown) {
             if (RINPlayer.MapCooldown == 0) {
-                PacketDispatcher.sendToServer((IMessage) new PacketGuiTeleport(p_146284_1_.id));
+                PacketDispatcher.sendToServer(new PacketGuiTeleport(p_146284_1_.id));
                 RINPlayer.MapCooldown = ConfigurationMoD.TeleportCooldown;
             }
         } else {
-            PacketDispatcher.sendToServer((IMessage) new PacketGuiTeleport(p_146284_1_.id));
+            PacketDispatcher.sendToServer(new PacketGuiTeleport(p_146284_1_.id));
         }
     }
 
     public void drawGuiBar(int x, int y, int u, int v, int width, int height, int texturewidth) {
         float f = 0.00390625F;
-        float f1 = 0.00390625F;
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
-        tessellator.addVertexWithUV((x + 0), (y + height), this.zLevel, ((u + 0) * f), ((v + height) * f1));
+        tessellator.addVertexWithUV(x, (y + height), this.zLevel, (u * f), ((v + height) * f));
         tessellator
-            .addVertexWithUV((x + texturewidth), (y + height), this.zLevel, ((u + width) * f), ((v + height) * f1));
-        tessellator.addVertexWithUV((x + texturewidth), (y + 0), this.zLevel, ((u + width) * f), ((v + 0) * f1));
-        tessellator.addVertexWithUV((x + 0), (y + 0), this.zLevel, ((u + 0) * f), ((v + 0) * f1));
+            .addVertexWithUV((x + texturewidth), (y + height), this.zLevel, ((u + width) * f), ((v + height) * f));
+        tessellator.addVertexWithUV((x + texturewidth), y, this.zLevel, ((u + width) * f), (v * f));
+        tessellator.addVertexWithUV(x, y, this.zLevel, (u * f), (v * f));
         tessellator.draw();
     }
 }

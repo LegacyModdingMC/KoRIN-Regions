@@ -38,7 +38,7 @@ public abstract class AbstractMessage<T extends AbstractMessage<T>> implements I
 
     /**
      * If message is sent to the wrong side, an exception will be thrown during handling
-     * 
+     *
      * @return True if the message is allowed to be handled on the given side
      */
     protected boolean isValidOnSide(Side side) {
@@ -81,9 +81,10 @@ public abstract class AbstractMessage<T extends AbstractMessage<T>> implements I
      */
     @Override
     public final IMessage onMessage(T msg, MessageContext ctx) {
-        if (ctx.side.name() == "CLIENT") {
+        if (ctx.side.name()
+            .equals("CLIENT")) {
             msg.process(RINMAIN.proxy.getPlayerEntity(ctx), ctx.side);
-        } else if (ctx.side.name() == "SERVER");
+        }
         {
             msg.process(RINMAIN.proxy.getPlayerEntity(ctx), ctx.side);
         }
