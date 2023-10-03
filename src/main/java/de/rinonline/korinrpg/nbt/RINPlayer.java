@@ -10,7 +10,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
 import de.rinonline.korinrpg.Helper.Gui.InventoryRINPlayer;
-import de.rinonline.korinrpg.Helper.Gui.RuneStoneGUI;
 
 public class RINPlayer implements IExtendedEntityProperties {
 
@@ -21,6 +20,8 @@ public class RINPlayer implements IExtendedEntityProperties {
     private int timer;
 
     private final int maxtime = 20;
+
+    public static ArrayList<String> clientStrList;
 
     public ArrayList<String> DiscoverdBiomeList = new ArrayList<>();
 
@@ -85,10 +86,11 @@ public class RINPlayer implements IExtendedEntityProperties {
         }
         this.DiscoverdBiomeList = new ArrayList<>();
         int tempsize2 = properties.getInteger("size_biomename");
-        for (int j = 0; j < tempsize2; j++)
+        for (int j = 0; j < tempsize2; j++) {
             this.DiscoverdBiomeList.add(properties.getString("biomename" + j + "_Name"));
-        RuneStoneGUI.strlist = this.DiscoverdNameList;
-        RuneStoneGUI.cordlist = this.DiscoverdCordsList;
+        }
+        clientStrList = DiscoverdNameList;
+        // RuneStoneGUI.cordlist = this.DiscoverdCordsList;
         this.inventory.readFromNBT(properties);
         MapCooldown = properties.getInteger("MapCooldown");
     }
@@ -97,8 +99,8 @@ public class RINPlayer implements IExtendedEntityProperties {
         this.DiscoverdCordsList = new ArrayList<>();
         this.DiscoverdNameList = new ArrayList<>();
         this.inventory = new InventoryRINPlayer();
-        RuneStoneGUI.strlist = this.DiscoverdNameList;
-        RuneStoneGUI.cordlist = this.DiscoverdCordsList;
+        clientStrList = DiscoverdNameList;
+        // RuneStoneGUI.cordlist = this.DiscoverdCordsList;
     }
 
     public void addTeleportCords(ChunkCoordinates cords, String str) {

@@ -1,7 +1,5 @@
 package de.rinonline.korinrpg.Helper.Gui;
 
-import java.util.ArrayList;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.gui.FontRenderer;
@@ -13,26 +11,26 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import de.rinonline.korinrpg.ConfigurationMoD;
 import de.rinonline.korinrpg.Network.PacketDispatcher;
 import de.rinonline.korinrpg.Network.PacketGuiTeleport;
 import de.rinonline.korinrpg.nbt.RINPlayer;
 
+@SideOnly(Side.CLIENT)
 public class RuneStoneGUI extends GuiContainer {
 
     private float xSize_lo;
 
     public static final int GUI_ID = 55;
 
-    public static ArrayList<String> strlist;
-
-    public static ArrayList<ChunkCoordinates> cordlist;
+    // public static ArrayList<ChunkCoordinates> cordlist;
 
     private final int ImageWidth = 256;
 
@@ -65,8 +63,8 @@ public class RuneStoneGUI extends GuiContainer {
         int l = this.height / 2;
         Keyboard.enableRepeatEvents(true);
         this.buttonList.clear();
-        if (!strlist.isEmpty()) {
-            int n = strlist.size();
+        if (!RINPlayer.clientStrList.isEmpty()) {
+            int n = RINPlayer.clientStrList.size();
             float alpha = (360 / n);
             float p = n - 1.0F;
             for (int i = 0; i < n; i++) {
@@ -74,7 +72,11 @@ public class RuneStoneGUI extends GuiContainer {
                 float x = (float) Math.cos(Math.toRadians(alpha2) * p) * 70.0F;
                 float z = (float) Math.sin(Math.toRadians(alpha2) * p) * 70.0F;
                 this.buttonList.add(
-                    new RINButtonRunestone(i, (int) (k + x - 8.0F), (int) (l + z - 8.0F), I18n.format(strlist.get(i))));
+                    new RINButtonRunestone(
+                        i,
+                        (int) (k + x - 8.0F),
+                        (int) (l + z - 8.0F),
+                        I18n.format(RINPlayer.clientStrList.get(i))));
             }
         }
         super.initGui();
